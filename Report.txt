@@ -1,0 +1,89 @@
+---------------------------------------
+Instructions
+---------------------------------------
+
+Open TurtleTest\TurtleTest.sln in Visual Studio 2019 (VS19)
+Tests are run from Test Explorer in VS19
+Nuget package dependencies should be automatically installed by VS19 (NUnit/NUnit3TestAdapter/Net.Test.Sdk)
+If project will not run verify that Net Core 2.2 is intalled on your machine or change project framework to Net Core 3.0 
+Each test has extra output available through the "Open additional output for this result" link in the Test Detail Summary
+There are 21 tests in total. VS19 will add the non-runnable "Test_Main" test to the list if real time discovery is turned on (Test Explorer>Options)
+
+
+---------------------------------------
+Defects and Code Changes
+---------------------------------------
+
+Main
+	ln 169 : changed class access to public to allow access for Test code 
+	ln 175 : Removed ".Skip(1)" as skipped first sequence 
+
+Game.Move
+	Added logic to check if a move moves turtle off board. Move is ignored if so. (assumes board is always specified as (0,0)->(Cols,Rows))
+	ln 119 : "Turtle.X-- >> Turtle.Y--" incorrect var X changed to Y	(noticed in code review but tests would have detected this)
+
+
+
+---------------------------------------
+Questions
+---------------------------------------
+
+1. Easy or Hard to Test:
+		Relatively straightforward.
+	
+
+2. Changes for ease of testing and code improvement:
+		Game mechanic (i.e. read in of actions and settings, and executions of actions) in main could be moved to class(es). 
+		Main could just then create and use these classes, as could the tests.
+	
+		Actions and settings could be changed to json or other key pair value types, to remove hard coding and to facilitate data driven testing. 
+		Actions and settings could be changed to json or other key pair value types to improve parsing of both good and bad data.	
+	
+		Code has no Try/Catch implementations, inclusion of which would facilitate easier negative testing (bad settings and actions)
+		Code has no validation of settings which should be implemented in the properties (e.g. initial turtle point can't be set to less than (0,0) )
+	
+		Rearranging Direction enum in order North/East/South/West would allow simpler test for correct rotations (step through enum loop)
+
+
+3. Tools:	
+		Visual Studio : C# project	
+		Nunit : Testing framework. Facilitates parameterised testing
+		
+
+4. Tests:
+		Actions - Test actions function correctly
+			Test rotate actions are correct (x4 for possible rotations)
+			Test move actions are correct	(x8 for valid and invalid moves)
+
+		Game Logic - Test game logic
+			Test turtle is not alive after mine hit		
+			Test turtle has exited if exit found
+			Test turtle alive and not exited if not on mine or exit square at end of sequence
+		
+		Parse - Test parsing is correct
+			Test settings are parsed in correctly (using defined string)
+			Test actions are parsed in correctly (using defined string)
+
+		Games - Test game outcomes
+			Test main program completes with expected outcome (multiple tests)
+	
+	
+5. Additional Testing and Coding:
+		Negative testing on bad settings and actions data after implementation of parsing and error handling changes specified above
+		Increased logging for usage in console running and CI environments.
+
+
+
+--------------------------------
+EXTRA
+--------------------------------
+Logging
+Reports
+CI - 2 branches + reports (TeamCity?)
+
+
+
+
+
+
+
