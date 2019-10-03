@@ -102,7 +102,7 @@ namespace TestMyTurtle
             game.Execute(action);
 
             //Check turtle is not alive
-            Assert.True(turtle.IsAlive, "Turtle is alive but should be dead > ${turtle.IsAlive}");
+            Assert.False(turtle.IsAlive, "Turtle is alive but should be dead > ${turtle.IsAlive}");
         }
 
 
