@@ -10,7 +10,7 @@ namespace TestMyTurtle
     [TestFixture]
     [Author("Richard Kiely")]
     //[Parallelizable(ParallelScope.All)] (runs faster without)
-    public class TurtleTests
+    public class TurtleTests : TestBase
     {
         //primitives
         internal const int boardCols = 4;
@@ -28,19 +28,9 @@ namespace TestMyTurtle
         }
 
 
-        [SetUp]
-        public void Test_SetUp()
-        {
-            TestContext.Out.WriteLine("Test Method: " + TestContext.CurrentContext.Test.MethodName);
-        }
 
 
-        [TearDown]
-        public void Test_TearDown()
-        {
-            TestContext.Out.WriteLine("Test Outcome: " + TestContext.CurrentContext.Result.Outcome);
-            TestContext.Out.WriteLine("Test Message: " + TestContext.CurrentContext.Result.Message);
-        }
+
 
 
 
@@ -112,7 +102,7 @@ namespace TestMyTurtle
             game.Execute(action);
 
             //Check turtle is not alive
-            Assert.True(turtle.IsAlive, "Turtle is alive but should be dead");
+            Assert.True(turtle.IsAlive, "Turtle is alive but should be dead > ${turtle.IsAlive}");
         }
 
 
